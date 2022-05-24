@@ -11,13 +11,13 @@ fs.readdir(filePath, (err, files) => {
   else {
     
     files.forEach(file => {
-      if (path.extname(file) == '.txt')
+      if ((path.extname(file) == '.txt') || (path.extname(file) == '.js') || (path.extname(file) == '.css') || (path.extname(file) == '.csv'))
         fs.stat(filePath, (err, stats) => {
           if (err) {
             console.error(err);
             return;
           }
-          console.log((path.basename(filePath, path.extname(filePath))) + ' - ' + (path.extname(filePath)) + ' - ' + (stats.size));
+          console.log((path.basename(file, path.extname(file))) + ' - ' + ((path.extname(file)).slice(1)) + ' - ' + (stats.size));
         });
         
     });

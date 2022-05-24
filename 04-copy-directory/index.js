@@ -11,21 +11,16 @@ fs.access(filePathCopy, (error) => {
       if (error) {
         console.log(error);
       } else {
-        console.log('New Directory created successfully !!');
+        console.log('New Directory created successfully !');
       }
     });
   } else {
-    console.log('Given Directory already exists !!');
+    console.log('Given Directory already exists !');
   }
 });
 fs.readdir(filePath, (err, files) => {
   if(err) throw err; 
-
-  fs.copyFile(files, files-copy, (err) => {
-    if (err) 
-      throw err;
-    
-  });
+  console.log(files);
     
 });
     
