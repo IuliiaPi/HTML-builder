@@ -20,7 +20,14 @@ fs.access(filePathCopy, (error) => {
 });
 fs.readdir(filePath, (err, files) => {
   if(err) throw err; 
-  console.log(files);
     
+  files.forEach(file => {
+    let filesPath = path.join(__dirname, './files', file);
+    let filesPathCopy = path.join(__dirname, './files-copy', file);
+
+    fs.copyFile(filesPath, filesPathCopy, (err) => {
+      if (err) throw err;
+    });
+  });
 });
     
