@@ -1,23 +1,48 @@
 const fs = require('fs');
 const path = require('path');
-let filePath = path.join(__dirname, './secret-folder');
+
+const pathToFolder = path.join(__dirname, './secret-folder');
+
+const getBasename = (pathToFile, ext) => {
+  return path.basename(pathToFile, ext);
+};
+
+const getExtension = (pathToFile) => {
+  const ext = path.extname(pathToFile);
+  return ext.slice(1);
+};
+
+const getSize = (fileStats) => {
+  return fileStats.size;
+};
   
-fs.readdir(filePath, {withFileTypes: true}, (err, files) => {  
+fs.readdir(pathToFolder, (err, folderContent) => {  
   if (err) {
     console.log(err);
   } else {
-    files.forEach(file => {
-      if (file.isFile()) {
-        let filePathItem = filePath + '/' + file['name'];
-        fs.stat(filePathItem, (err, stats) => {
-          if (err) {
-            console.error(err);
-            return;
+    folderContent.forEach(item => {
+      const pathToFile = path.join(pathToFolder, item); 
+       
+      fs.stat(pathToFile, (err, fileStats) => {
+        if (err) {
+          console.error(err); 
+        } else {
+          if (fileStats.isFile()) {  
+            const ext = path.extname(pathToFile);
+          
+            const basename = getBasename(pathToFile, ext);
+            const extension = getExtension(pathToFile);
+            const fileSize = getSize(fileStats);
+
+            const output = `${basename} - ${extension} - ${fileSize}b`;          
+            console.log(output);
           }
-          console.log((path.basename(filePathItem, path.extname(filePathItem))) + ' - ' + ((path.extname(filePathItem)).slice(1)) + ' - ' + (stats.size));
-        });
-      } 
+        }
+      });
     });
-  }
+  }    
 });
-  
+
+// const basename = path.basename(pathToFile, path.extname(pathToFile));
+// const extension = (path.extname(pathToFile)).slice(1);
+// const fileSize = fileStats.size;

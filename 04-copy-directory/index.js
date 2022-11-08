@@ -1,13 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-let filePath = path.join(__dirname, './files');
-let filePathCopy = path.join(__dirname, './files-copy');
+const pathToFile = path.join(__dirname, './files');
+const pathToFileCopy = path.join(__dirname, './files-copy');
   
-fs.access(filePathCopy, (error) => {
-  if (error) {
-   
-    fs.mkdir(filePathCopy, (error) => {
+fs.access(pathToFileCopy, (error) => {
+  if (error) {   
+    fs.mkdir(pathToFileCopy, (error) => {
       if (error) {
         console.log(error);
       } else {
@@ -18,14 +17,15 @@ fs.access(filePathCopy, (error) => {
     console.log('Given Directory already exists !');
   }
 });
-fs.readdir(filePath, (err, files) => {
+
+fs.readdir(pathToFile, (err, files) => {
   if(err) throw err; 
     
   files.forEach(file => {
-    let filesPath = path.join(__dirname, './files', file);
-    let filesPathCopy = path.join(__dirname, './files-copy', file);
+    const pathToFiles = path.join(__dirname, './files', file);
+    const pathToFilesCopy = path.join(__dirname, './files-copy', file);
 
-    fs.copyFile(filesPath, filesPathCopy, (err) => {
+    fs.copyFile(pathToFiles, pathToFilesCopy, (err) => {
       if (err) throw err;
     });
   });
